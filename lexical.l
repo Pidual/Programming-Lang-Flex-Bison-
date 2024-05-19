@@ -3,18 +3,17 @@
 #include "syntactic.tab.h"
 %}
 
-identiVar [a-z]+[0-9]+
+
 float -?[0-9]+\.[0-9]*
 int -?[0-9]+
 string \"[^(\n|\")]*\"
 param \(("var v"[0-9]+" "?)*\)
+identiVar [a-z][a-zA-Z0-9]*
 argumento \[("[0-9]+"?)*\]
 /** Seccion de reglas**/
 %%
-#                               {return EOL;}
 "variable"                      {return VAR;}
 "funcion"                       {return FUN;}
-{identiVar}                     {yylval.sval = strdup(yytext); return IDVR;}
 {string}                        {yylval.sval = strdup(yytext); return STR;}
 {float}                         {yylval.fval = atof(yytext); return FLO;}
 {int}                           {yylval.ival = atoi(yytext); return INT;}
@@ -43,7 +42,9 @@ argumento \[("[0-9]+"?)*\]
 "finFun"                        {return FUE;}
 "atrapar"                       {return ATP;}
 "print"                         {return PRINT;}
+{identiVar}                     {yylval.sval = strdup(yytext); return IDVR;}
 [ \t\n]                         {/* ignorar espacios */}
+#                               {return EOL;}
 .                               {printf("Error lexico: %s\n", yytext);}
 %%
 /**Seccion de codigo de usuario**/
