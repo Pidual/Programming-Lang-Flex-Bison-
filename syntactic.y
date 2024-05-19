@@ -30,7 +30,7 @@ void setSymbolValue(char *name, float value) {
     symbolCount++;
 }
 
-void setSymbolValue2(char *name, float value, float value2) {
+void setSymbolValueOperation(char *name, float value, float value2) {
     for (int i = 0; i < symbolCount; ++i) {
         if (strcmp(symbolTable[i].name, name) == 0) {
             symbolTable[i].value = value + value2;
@@ -76,6 +76,17 @@ float getSymbolValue(char *name) {
     return 0.0;
 }
 
+void printSymbolTable() {
+    printf("Symbol Table:\n");
+    printf("-------------\n");
+    printf("%-20s %-20s %-20s\n", "Variable Name", "Numeric Value", "String Value");
+    printf("-------------\n");
+    
+    for (int i = 0; i < symbolCount; ++i) {
+        printf("%-20s %-20f %-20s\n", symbolTable[i].name, symbolTable[i].value, symbolTable[i].valueS);
+    }
+}
+
 %}
 
 %union {
@@ -117,14 +128,12 @@ sentence    : decvar
 decvar      : VAR IDVR EOL {  create($2); }
 
 initvar     : VAR IDVR IGU INT EOL { setSymbolValue($2, (float)$4); 
-                                    $$ = $4;
-                                  }
+                                    $$ = $4;}
             | VAR IDVR IGU FLO EOL { setSymbolValue($2, $4); 
-                                    $$ = $4;  
-                                  }
+                                    $$ = $4;}
             | VAR IDVR IGU operation EOL { setSymbolValue($2, (float)$4); }
-            | VAR IDVR IGU STR EOL { setSymbolValueC($2, $4); }
-            | VAR IDVR IGU value { setSymbolValue($2, $4); }
+            | VAR IDVR IGU STR EOL { setSymbolValueC($2, $4);}
+            | VAR IDVR IGU value EOL { setSymbolValue($2, $4);}
 
 asigvar     : IDVR IGU value EOL { setSymbolValue($1, $3); }
             | IDVR IGU operation EOL { setSymbolValue($1, (float)$3); }
@@ -132,7 +141,7 @@ asigvar     : IDVR IGU value EOL { setSymbolValue($1, $3); }
 
 value       : INT { $$ = (float)$1; }
             | FLO { $$ = $1; }
-            | IDVR { $$ = getSymbolValue($1); }
+            | IDVR { $$ = getSymbolValue($1);}
 
 operation   : value MAS value { $$ = $1 + $3; }
             | value RES value { $$ = $1 - $3; }
@@ -144,7 +153,7 @@ operation   : value MAS value { $$ = $1 + $3; }
                               }
 
 callfuncion : IDVR PIZ PDE EOL { create($1); }
-            | IDVR PIZ INT INT PDE EOL { setSymbolValue2($1, (float)$3, (float)$4); }
+            | IDVR PIZ INT INT PDE EOL { setSymbolValueOperation($1, (float)$3, (float)$4); }
 
 chi         : CHI PIZ condition PDE operation EOL FIN {if($3 == 0)
                                                         printf("Entra al if: %f\n", $5);
@@ -239,12 +248,13 @@ for         : POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EO
                                                      }
                                                     }
 
-printSentence : PRINT PIZ value PDE EOL { printf("%f\n", $3); }
-              | PRINT PIZ STR PDE EOL { printf("%s\n", $3); }
+printSentence : PRINT PIZ value PDE EOL { printf("value: %f\n", $3); }
+              | PRINT PIZ STR PDE EOL { printf("string: %s\n", $3);  }
+         /* printSymbolTable(); */     
 %%
 /**Seccion de codigo de usuario**/
 void yyerror(char *s){
-    printf("Error Sintáctico: %s\n", s);
+    printf("Error Sintactico: %s\n", s);
 }
 
 int main(int argc, char **argv){
