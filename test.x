@@ -1,12 +1,15 @@
-print ("-------PRUEBA DECLARACION variable------")#
-variable a12#
-print (a12)#
+print("-------PRUEBA DECLARACION variable------")#
+variable gato#
+print(gato)#
+
+variable gato3 = "gaticoo"#
+print(gato3)#
 
 variable num1 = 1#
-print (num1)#
+print(num1)#
 
 variable v12 = "Hola"#
-print (v12)#
+print(v12)#
 
 variable v2 = -2#
 print (v2)#
