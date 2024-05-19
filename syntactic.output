@@ -1,0 +1,1984 @@
+Terminals unused in grammar
+
+    ARG
+
+
+State 0 conflicts: 10 shift/reduce
+State 8 conflicts: 10 shift/reduce
+State 57 conflicts: 10 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ε
+    2        | sentence
+    3        | decfun
+    4        | program sentence
+    5        | program decfun
+
+    6 sentence: decvar
+    7         | asigvar
+    8         | initvar
+    9         | operation EOL
+   10         | chi
+   11         | hasta
+   12         | for
+   13         | err
+   14         | callfuncion
+   15         | printSentence
+
+   16 decvar: VAR IDVR EOL
+
+   17 initvar: VAR IDVR IGU INT EOL
+   18        | VAR IDVR IGU FLO EOL
+   19        | VAR IDVR IGU operation EOL
+   20        | VAR IDVR IGU STR EOL
+   21        | VAR IDVR IGU value
+
+   22 asigvar: IDVR IGU value EOL
+   23        | IDVR IGU operation EOL
+   24        | IDVR IGU callfuncion
+
+   25 value: INT
+   26      | FLO
+   27      | IDVR
+
+   28 operation: value MAS value
+   29          | value RES value
+   30          | value MUL value
+   31          | value DIV value
+
+   32 callfuncion: IDVR PIZ PDE EOL
+   33            | IDVR PIZ INT INT PDE EOL
+
+   34 chi: CHI PIZ condition PDE operation EOL FIN
+   35    | CHI PIZ condition PDE IDVR IGU value EOL FIN
+   36    | CHI PIZ condition PDE IDVR IGU operation EOL FIN
+   37    | CHI PIZ condition PDE IDVR IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ condition PDE IDVR IGU operation NOO IDVR IGU operation EOL FIN
+
+   39 hasta: HAS PIZ value MEN value PDE IDVR IGU operation EOL
+   40      | HAS PIZ value MEIGU value PDE IDVR IGU operation EOL
+
+   41 condition: value MEN value
+   42          | value MEIGU value
+   43          | value MAY value
+   44          | value MAYGU value
+   45          | value EQU value
+   46          | value DIF value
+
+   47 decfun: FUN IDVR PAR EOL FUE
+   48       | FUN IDVR PAR return FUE
+   49       | FUN IDVR PAR decvar return FUE
+   50       | FUN IDVR PAR initvar return FUE
+   51       | FUN IDVR PAR asigvar return FUE
+   52       | FUN IDVR PAR operation return FUE
+
+   53 return: RTN IDVR EOL
+   54       | RTN operation EOL
+
+   55 err: ITR program ATP program FIN
+   56    | ITR EOL ATP printSentence FIN
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL
+   59    | POR PIZ initvar condition PDE asigvar
+
+   60 printSentence: PRINT PIZ value PDE EOL
+   61              | PRINT PIZ STR PDE EOL
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    IDVR <sval> (258) 16 17 18 19 20 21 22 23 24 27 32 33 35 36 37 38 39 40 47 48 49 50 51 52 53 57 58
+    STR <sval> (259) 20 61
+    INT <ival> (260) 17 25 33 57 58
+    FLO <fval> (261) 18 26
+    EOL (262) 9 16 17 18 19 20 22 23 32 33 34 35 36 37 38 39 40 47 53 54 56 57 58 60 61
+    VAR (263) 16 17 18 19 20 21
+    IGU (264) 17 18 19 20 21 22 23 24 35 36 37 38 39 40 57 58
+    MAS (265) 28
+    MUL (266) 30
+    RES (267) 29
+    DIV (268) 31
+    MEN (269) 39 41 57
+    MEIGU (270) 40 42
+    MAY (271) 43
+    MAYGU (272) 44 58
+    EQU (273) 45
+    DIF (274) 46
+    CHI (275) 34 35 36 37 38
+    PIZ (276) 32 33 34 35 36 37 38 39 40 57 58 59 60 61
+    PDE (277) 32 33 34 35 36 37 38 39 40 57 58 59 60 61
+    FIN (278) 34 35 36 37 38 55 56
+    NOO (279) 37 38
+    HAS (280) 39 40
+    FUN (281) 47 48 49 50 51 52
+    PAR (282) 47 48 49 50 51 52
+    RTN (283) 53 54
+    ITR (284) 55 56
+    FUE (285) 47 48 49 50 51 52
+    ATP (286) 55 56
+    ARG (287)
+    PRINT (288) 60 61
+    POR (289) 57 58 59
+
+
+Nonterminals, with rules where they appear
+
+    $accept (35)
+        on left: 0
+    program (36)
+        on left: 1 2 3 4 5
+        on right: 0 4 5 55
+    sentence (37)
+        on left: 6 7 8 9 10 11 12 13 14 15
+        on right: 2 4
+    decvar (38)
+        on left: 16
+        on right: 6 49
+    initvar <fval> (39)
+        on left: 17 18 19 20 21
+        on right: 8 50 59
+    asigvar (40)
+        on left: 22 23 24
+        on right: 7 51 59
+    value <fval> (41)
+        on left: 25 26 27
+        on right: 21 22 28 29 30 31 35 37 39 40 41 42 43 44 45 46 57 58 60
+    operation <fval> (42)
+        on left: 28 29 30 31
+        on right: 9 19 23 34 36 38 39 40 52 54 57 58
+    callfuncion (43)
+        on left: 32 33
+        on right: 14 24
+    chi (44)
+        on left: 34 35 36 37 38
+        on right: 10
+    hasta (45)
+        on left: 39 40
+        on right: 11
+    condition <fval> (46)
+        on left: 41 42 43 44 45 46
+        on right: 34 35 36 37 38 59
+    decfun (47)
+        on left: 47 48 49 50 51 52
+        on right: 3 5
+    return (48)
+        on left: 53 54
+        on right: 48 49 50 51 52
+    err (49)
+        on left: 55 56
+        on right: 13
+    for (50)
+        on left: 57 58 59
+        on right: 12
+    printSentence <fval> (51)
+        on left: 60 61
+        on right: 15 56
+
+
+State 0
+
+    0 $accept: • program $end
+
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    IDVR      [reduce using rule 1 (program)]
+    INT       [reduce using rule 1 (program)]
+    FLO       [reduce using rule 1 (program)]
+    VAR       [reduce using rule 1 (program)]
+    CHI       [reduce using rule 1 (program)]
+    HAS       [reduce using rule 1 (program)]
+    FUN       [reduce using rule 1 (program)]
+    ITR       [reduce using rule 1 (program)]
+    PRINT     [reduce using rule 1 (program)]
+    POR       [reduce using rule 1 (program)]
+    $default  reduce using rule 1 (program)
+
+    program        go to state 11
+    sentence       go to state 12
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 21
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 1
+
+   22 asigvar: IDVR • IGU value EOL
+   23        | IDVR • IGU operation EOL
+   24        | IDVR • IGU callfuncion
+   27 value: IDVR •
+   32 callfuncion: IDVR • PIZ PDE EOL
+   33            | IDVR • PIZ INT INT PDE EOL
+
+    IGU  shift, and go to state 25
+    PIZ  shift, and go to state 26
+
+    $default  reduce using rule 27 (value)
+
+
+State 2
+
+   25 value: INT •
+
+    $default  reduce using rule 25 (value)
+
+
+State 3
+
+   26 value: FLO •
+
+    $default  reduce using rule 26 (value)
+
+
+State 4
+
+   16 decvar: VAR • IDVR EOL
+   17 initvar: VAR • IDVR IGU INT EOL
+   18        | VAR • IDVR IGU FLO EOL
+   19        | VAR • IDVR IGU operation EOL
+   20        | VAR • IDVR IGU STR EOL
+   21        | VAR • IDVR IGU value
+
+    IDVR  shift, and go to state 27
+
+
+State 5
+
+   34 chi: CHI • PIZ condition PDE operation EOL FIN
+   35    | CHI • PIZ condition PDE IDVR IGU value EOL FIN
+   36    | CHI • PIZ condition PDE IDVR IGU operation EOL FIN
+   37    | CHI • PIZ condition PDE IDVR IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI • PIZ condition PDE IDVR IGU operation NOO IDVR IGU operation EOL FIN
+
+    PIZ  shift, and go to state 28
+
+
+State 6
+
+   39 hasta: HAS • PIZ value MEN value PDE IDVR IGU operation EOL
+   40      | HAS • PIZ value MEIGU value PDE IDVR IGU operation EOL
+
+    PIZ  shift, and go to state 29
+
+
+State 7
+
+   47 decfun: FUN • IDVR PAR EOL FUE
+   48       | FUN • IDVR PAR return FUE
+   49       | FUN • IDVR PAR decvar return FUE
+   50       | FUN • IDVR PAR initvar return FUE
+   51       | FUN • IDVR PAR asigvar return FUE
+   52       | FUN • IDVR PAR operation return FUE
+
+    IDVR  shift, and go to state 30
+
+
+State 8
+
+   55 err: ITR • program ATP program FIN
+   56    | ITR • EOL ATP printSentence FIN
+
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    EOL    shift, and go to state 31
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    IDVR      [reduce using rule 1 (program)]
+    INT       [reduce using rule 1 (program)]
+    FLO       [reduce using rule 1 (program)]
+    VAR       [reduce using rule 1 (program)]
+    CHI       [reduce using rule 1 (program)]
+    HAS       [reduce using rule 1 (program)]
+    FUN       [reduce using rule 1 (program)]
+    ITR       [reduce using rule 1 (program)]
+    PRINT     [reduce using rule 1 (program)]
+    POR       [reduce using rule 1 (program)]
+    $default  reduce using rule 1 (program)
+
+    program        go to state 32
+    sentence       go to state 12
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 21
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 9
+
+   60 printSentence: PRINT • PIZ value PDE EOL
+   61              | PRINT • PIZ STR PDE EOL
+
+    PIZ  shift, and go to state 33
+
+
+State 10
+
+   57 for: POR • PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR • PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL
+   59    | POR • PIZ initvar condition PDE asigvar
+
+    PIZ  shift, and go to state 34
+
+
+State 11
+
+    0 $accept: program • $end
+    4 program: program • sentence
+    5        | program • decfun
+
+    $end   shift, and go to state 35
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    sentence       go to state 36
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 37
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 12
+
+    2 program: sentence •
+
+    $default  reduce using rule 2 (program)
+
+
+State 13
+
+    6 sentence: decvar •
+
+    $default  reduce using rule 6 (sentence)
+
+
+State 14
+
+    8 sentence: initvar •
+
+    $default  reduce using rule 8 (sentence)
+
+
+State 15
+
+    7 sentence: asigvar •
+
+    $default  reduce using rule 7 (sentence)
+
+
+State 16
+
+   28 operation: value • MAS value
+   29          | value • RES value
+   30          | value • MUL value
+   31          | value • DIV value
+
+    MAS  shift, and go to state 38
+    MUL  shift, and go to state 39
+    RES  shift, and go to state 40
+    DIV  shift, and go to state 41
+
+
+State 17
+
+    9 sentence: operation • EOL
+
+    EOL  shift, and go to state 42
+
+
+State 18
+
+   14 sentence: callfuncion •
+
+    $default  reduce using rule 14 (sentence)
+
+
+State 19
+
+   10 sentence: chi •
+
+    $default  reduce using rule 10 (sentence)
+
+
+State 20
+
+   11 sentence: hasta •
+
+    $default  reduce using rule 11 (sentence)
+
+
+State 21
+
+    3 program: decfun •
+
+    $default  reduce using rule 3 (program)
+
+
+State 22
+
+   13 sentence: err •
+
+    $default  reduce using rule 13 (sentence)
+
+
+State 23
+
+   12 sentence: for •
+
+    $default  reduce using rule 12 (sentence)
+
+
+State 24
+
+   15 sentence: printSentence •
+
+    $default  reduce using rule 15 (sentence)
+
+
+State 25
+
+   22 asigvar: IDVR IGU • value EOL
+   23        | IDVR IGU • operation EOL
+   24        | IDVR IGU • callfuncion
+
+    IDVR  shift, and go to state 43
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value        go to state 44
+    operation    go to state 45
+    callfuncion  go to state 46
+
+
+State 26
+
+   32 callfuncion: IDVR PIZ • PDE EOL
+   33            | IDVR PIZ • INT INT PDE EOL
+
+    INT  shift, and go to state 47
+    PDE  shift, and go to state 48
+
+
+State 27
+
+   16 decvar: VAR IDVR • EOL
+   17 initvar: VAR IDVR • IGU INT EOL
+   18        | VAR IDVR • IGU FLO EOL
+   19        | VAR IDVR • IGU operation EOL
+   20        | VAR IDVR • IGU STR EOL
+   21        | VAR IDVR • IGU value
+
+    EOL  shift, and go to state 49
+    IGU  shift, and go to state 50
+
+
+State 28
+
+   34 chi: CHI PIZ • condition PDE operation EOL FIN
+   35    | CHI PIZ • condition PDE IDVR IGU value EOL FIN
+   36    | CHI PIZ • condition PDE IDVR IGU operation EOL FIN
+   37    | CHI PIZ • condition PDE IDVR IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ • condition PDE IDVR IGU operation NOO IDVR IGU operation EOL FIN
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 52
+    condition  go to state 53
+
+
+State 29
+
+   39 hasta: HAS PIZ • value MEN value PDE IDVR IGU operation EOL
+   40      | HAS PIZ • value MEIGU value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 54
+
+
+State 30
+
+   47 decfun: FUN IDVR • PAR EOL FUE
+   48       | FUN IDVR • PAR return FUE
+   49       | FUN IDVR • PAR decvar return FUE
+   50       | FUN IDVR • PAR initvar return FUE
+   51       | FUN IDVR • PAR asigvar return FUE
+   52       | FUN IDVR • PAR operation return FUE
+
+    PAR  shift, and go to state 55
+
+
+State 31
+
+   56 err: ITR EOL • ATP printSentence FIN
+
+    ATP  shift, and go to state 56
+
+
+State 32
+
+    4 program: program • sentence
+    5        | program • decfun
+   55 err: ITR program • ATP program FIN
+
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    ATP    shift, and go to state 57
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    sentence       go to state 36
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 37
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 33
+
+   60 printSentence: PRINT PIZ • value PDE EOL
+   61              | PRINT PIZ • STR PDE EOL
+
+    IDVR  shift, and go to state 51
+    STR   shift, and go to state 58
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 59
+
+
+State 34
+
+   57 for: POR PIZ • IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ • IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL
+   59    | POR PIZ • initvar condition PDE asigvar
+
+    IDVR  shift, and go to state 60
+    VAR   shift, and go to state 61
+
+    initvar  go to state 62
+
+
+State 35
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 36
+
+    4 program: program sentence •
+
+    $default  reduce using rule 4 (program)
+
+
+State 37
+
+    5 program: program decfun •
+
+    $default  reduce using rule 5 (program)
+
+
+State 38
+
+   28 operation: value MAS • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 63
+
+
+State 39
+
+   30 operation: value MUL • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 64
+
+
+State 40
+
+   29 operation: value RES • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 65
+
+
+State 41
+
+   31 operation: value DIV • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 66
+
+
+State 42
+
+    9 sentence: operation EOL •
+
+    $default  reduce using rule 9 (sentence)
+
+
+State 43
+
+   27 value: IDVR •
+   32 callfuncion: IDVR • PIZ PDE EOL
+   33            | IDVR • PIZ INT INT PDE EOL
+
+    PIZ  shift, and go to state 26
+
+    $default  reduce using rule 27 (value)
+
+
+State 44
+
+   22 asigvar: IDVR IGU value • EOL
+   28 operation: value • MAS value
+   29          | value • RES value
+   30          | value • MUL value
+   31          | value • DIV value
+
+    EOL  shift, and go to state 67
+    MAS  shift, and go to state 38
+    MUL  shift, and go to state 39
+    RES  shift, and go to state 40
+    DIV  shift, and go to state 41
+
+
+State 45
+
+   23 asigvar: IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 68
+
+
+State 46
+
+   24 asigvar: IDVR IGU callfuncion •
+
+    $default  reduce using rule 24 (asigvar)
+
+
+State 47
+
+   33 callfuncion: IDVR PIZ INT • INT PDE EOL
+
+    INT  shift, and go to state 69
+
+
+State 48
+
+   32 callfuncion: IDVR PIZ PDE • EOL
+
+    EOL  shift, and go to state 70
+
+
+State 49
+
+   16 decvar: VAR IDVR EOL •
+
+    $default  reduce using rule 16 (decvar)
+
+
+State 50
+
+   17 initvar: VAR IDVR IGU • INT EOL
+   18        | VAR IDVR IGU • FLO EOL
+   19        | VAR IDVR IGU • operation EOL
+   20        | VAR IDVR IGU • STR EOL
+   21        | VAR IDVR IGU • value
+
+    IDVR  shift, and go to state 51
+    STR   shift, and go to state 71
+    INT   shift, and go to state 72
+    FLO   shift, and go to state 73
+
+    value      go to state 74
+    operation  go to state 75
+
+
+State 51
+
+   27 value: IDVR •
+
+    $default  reduce using rule 27 (value)
+
+
+State 52
+
+   41 condition: value • MEN value
+   42          | value • MEIGU value
+   43          | value • MAY value
+   44          | value • MAYGU value
+   45          | value • EQU value
+   46          | value • DIF value
+
+    MEN    shift, and go to state 76
+    MEIGU  shift, and go to state 77
+    MAY    shift, and go to state 78
+    MAYGU  shift, and go to state 79
+    EQU    shift, and go to state 80
+    DIF    shift, and go to state 81
+
+
+State 53
+
+   34 chi: CHI PIZ condition • PDE operation EOL FIN
+   35    | CHI PIZ condition • PDE IDVR IGU value EOL FIN
+   36    | CHI PIZ condition • PDE IDVR IGU operation EOL FIN
+   37    | CHI PIZ condition • PDE IDVR IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ condition • PDE IDVR IGU operation NOO IDVR IGU operation EOL FIN
+
+    PDE  shift, and go to state 82
+
+
+State 54
+
+   39 hasta: HAS PIZ value • MEN value PDE IDVR IGU operation EOL
+   40      | HAS PIZ value • MEIGU value PDE IDVR IGU operation EOL
+
+    MEN    shift, and go to state 83
+    MEIGU  shift, and go to state 84
+
+
+State 55
+
+   47 decfun: FUN IDVR PAR • EOL FUE
+   48       | FUN IDVR PAR • return FUE
+   49       | FUN IDVR PAR • decvar return FUE
+   50       | FUN IDVR PAR • initvar return FUE
+   51       | FUN IDVR PAR • asigvar return FUE
+   52       | FUN IDVR PAR • operation return FUE
+
+    IDVR  shift, and go to state 85
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+    EOL   shift, and go to state 86
+    VAR   shift, and go to state 4
+    RTN   shift, and go to state 87
+
+    decvar     go to state 88
+    initvar    go to state 89
+    asigvar    go to state 90
+    value      go to state 16
+    operation  go to state 91
+    return     go to state 92
+
+
+State 56
+
+   56 err: ITR EOL ATP • printSentence FIN
+
+    PRINT  shift, and go to state 9
+
+    printSentence  go to state 93
+
+
+State 57
+
+   55 err: ITR program ATP • program FIN
+
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    IDVR      [reduce using rule 1 (program)]
+    INT       [reduce using rule 1 (program)]
+    FLO       [reduce using rule 1 (program)]
+    VAR       [reduce using rule 1 (program)]
+    CHI       [reduce using rule 1 (program)]
+    HAS       [reduce using rule 1 (program)]
+    FUN       [reduce using rule 1 (program)]
+    ITR       [reduce using rule 1 (program)]
+    PRINT     [reduce using rule 1 (program)]
+    POR       [reduce using rule 1 (program)]
+    $default  reduce using rule 1 (program)
+
+    program        go to state 94
+    sentence       go to state 12
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 21
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 58
+
+   61 printSentence: PRINT PIZ STR • PDE EOL
+
+    PDE  shift, and go to state 95
+
+
+State 59
+
+   60 printSentence: PRINT PIZ value • PDE EOL
+
+    PDE  shift, and go to state 96
+
+
+State 60
+
+   57 for: POR PIZ IDVR • IGU INT EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR • IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL
+
+    IGU  shift, and go to state 97
+
+
+State 61
+
+   17 initvar: VAR • IDVR IGU INT EOL
+   18        | VAR • IDVR IGU FLO EOL
+   19        | VAR • IDVR IGU operation EOL
+   20        | VAR • IDVR IGU STR EOL
+   21        | VAR • IDVR IGU value
+
+    IDVR  shift, and go to state 98
+
+
+State 62
+
+   59 for: POR PIZ initvar • condition PDE asigvar
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 52
+    condition  go to state 99
+
+
+State 63
+
+   28 operation: value MAS value •
+
+    $default  reduce using rule 28 (operation)
+
+
+State 64
+
+   30 operation: value MUL value •
+
+    $default  reduce using rule 30 (operation)
+
+
+State 65
+
+   29 operation: value RES value •
+
+    $default  reduce using rule 29 (operation)
+
+
+State 66
+
+   31 operation: value DIV value •
+
+    $default  reduce using rule 31 (operation)
+
+
+State 67
+
+   22 asigvar: IDVR IGU value EOL •
+
+    $default  reduce using rule 22 (asigvar)
+
+
+State 68
+
+   23 asigvar: IDVR IGU operation EOL •
+
+    $default  reduce using rule 23 (asigvar)
+
+
+State 69
+
+   33 callfuncion: IDVR PIZ INT INT • PDE EOL
+
+    PDE  shift, and go to state 100
+
+
+State 70
+
+   32 callfuncion: IDVR PIZ PDE EOL •
+
+    $default  reduce using rule 32 (callfuncion)
+
+
+State 71
+
+   20 initvar: VAR IDVR IGU STR • EOL
+
+    EOL  shift, and go to state 101
+
+
+State 72
+
+   17 initvar: VAR IDVR IGU INT • EOL
+   25 value: INT •
+
+    EOL  shift, and go to state 102
+
+    $default  reduce using rule 25 (value)
+
+
+State 73
+
+   18 initvar: VAR IDVR IGU FLO • EOL
+   26 value: FLO •
+
+    EOL  shift, and go to state 103
+
+    $default  reduce using rule 26 (value)
+
+
+State 74
+
+   21 initvar: VAR IDVR IGU value •
+   28 operation: value • MAS value
+   29          | value • RES value
+   30          | value • MUL value
+   31          | value • DIV value
+
+    MAS  shift, and go to state 38
+    MUL  shift, and go to state 39
+    RES  shift, and go to state 40
+    DIV  shift, and go to state 41
+
+    $default  reduce using rule 21 (initvar)
+
+
+State 75
+
+   19 initvar: VAR IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 104
+
+
+State 76
+
+   41 condition: value MEN • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 105
+
+
+State 77
+
+   42 condition: value MEIGU • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 106
+
+
+State 78
+
+   43 condition: value MAY • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 107
+
+
+State 79
+
+   44 condition: value MAYGU • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 108
+
+
+State 80
+
+   45 condition: value EQU • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 109
+
+
+State 81
+
+   46 condition: value DIF • value
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 110
+
+
+State 82
+
+   34 chi: CHI PIZ condition PDE • operation EOL FIN
+   35    | CHI PIZ condition PDE • IDVR IGU value EOL FIN
+   36    | CHI PIZ condition PDE • IDVR IGU operation EOL FIN
+   37    | CHI PIZ condition PDE • IDVR IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ condition PDE • IDVR IGU operation NOO IDVR IGU operation EOL FIN
+
+    IDVR  shift, and go to state 111
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 112
+
+
+State 83
+
+   39 hasta: HAS PIZ value MEN • value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 113
+
+
+State 84
+
+   40 hasta: HAS PIZ value MEIGU • value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 114
+
+
+State 85
+
+   22 asigvar: IDVR • IGU value EOL
+   23        | IDVR • IGU operation EOL
+   24        | IDVR • IGU callfuncion
+   27 value: IDVR •
+
+    IGU  shift, and go to state 25
+
+    $default  reduce using rule 27 (value)
+
+
+State 86
+
+   47 decfun: FUN IDVR PAR EOL • FUE
+
+    FUE  shift, and go to state 115
+
+
+State 87
+
+   53 return: RTN • IDVR EOL
+   54       | RTN • operation EOL
+
+    IDVR  shift, and go to state 116
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 117
+
+
+State 88
+
+   49 decfun: FUN IDVR PAR decvar • return FUE
+
+    RTN  shift, and go to state 87
+
+    return  go to state 118
+
+
+State 89
+
+   50 decfun: FUN IDVR PAR initvar • return FUE
+
+    RTN  shift, and go to state 87
+
+    return  go to state 119
+
+
+State 90
+
+   51 decfun: FUN IDVR PAR asigvar • return FUE
+
+    RTN  shift, and go to state 87
+
+    return  go to state 120
+
+
+State 91
+
+   52 decfun: FUN IDVR PAR operation • return FUE
+
+    RTN  shift, and go to state 87
+
+    return  go to state 121
+
+
+State 92
+
+   48 decfun: FUN IDVR PAR return • FUE
+
+    FUE  shift, and go to state 122
+
+
+State 93
+
+   56 err: ITR EOL ATP printSentence • FIN
+
+    FIN  shift, and go to state 123
+
+
+State 94
+
+    4 program: program • sentence
+    5        | program • decfun
+   55 err: ITR program ATP program • FIN
+
+    IDVR   shift, and go to state 1
+    INT    shift, and go to state 2
+    FLO    shift, and go to state 3
+    VAR    shift, and go to state 4
+    CHI    shift, and go to state 5
+    FIN    shift, and go to state 124
+    HAS    shift, and go to state 6
+    FUN    shift, and go to state 7
+    ITR    shift, and go to state 8
+    PRINT  shift, and go to state 9
+    POR    shift, and go to state 10
+
+    sentence       go to state 36
+    decvar         go to state 13
+    initvar        go to state 14
+    asigvar        go to state 15
+    value          go to state 16
+    operation      go to state 17
+    callfuncion    go to state 18
+    chi            go to state 19
+    hasta          go to state 20
+    decfun         go to state 37
+    err            go to state 22
+    for            go to state 23
+    printSentence  go to state 24
+
+
+State 95
+
+   61 printSentence: PRINT PIZ STR PDE • EOL
+
+    EOL  shift, and go to state 125
+
+
+State 96
+
+   60 printSentence: PRINT PIZ value PDE • EOL
+
+    EOL  shift, and go to state 126
+
+
+State 97
+
+   57 for: POR PIZ IDVR IGU • INT EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR IGU • INT EOL value MAYGU value PDE IDVR IGU operation EOL
+
+    INT  shift, and go to state 127
+
+
+State 98
+
+   17 initvar: VAR IDVR • IGU INT EOL
+   18        | VAR IDVR • IGU FLO EOL
+   19        | VAR IDVR • IGU operation EOL
+   20        | VAR IDVR • IGU STR EOL
+   21        | VAR IDVR • IGU value
+
+    IGU  shift, and go to state 50
+
+
+State 99
+
+   59 for: POR PIZ initvar condition • PDE asigvar
+
+    PDE  shift, and go to state 128
+
+
+State 100
+
+   33 callfuncion: IDVR PIZ INT INT PDE • EOL
+
+    EOL  shift, and go to state 129
+
+
+State 101
+
+   20 initvar: VAR IDVR IGU STR EOL •
+
+    $default  reduce using rule 20 (initvar)
+
+
+State 102
+
+   17 initvar: VAR IDVR IGU INT EOL •
+
+    $default  reduce using rule 17 (initvar)
+
+
+State 103
+
+   18 initvar: VAR IDVR IGU FLO EOL •
+
+    $default  reduce using rule 18 (initvar)
+
+
+State 104
+
+   19 initvar: VAR IDVR IGU operation EOL •
+
+    $default  reduce using rule 19 (initvar)
+
+
+State 105
+
+   41 condition: value MEN value •
+
+    $default  reduce using rule 41 (condition)
+
+
+State 106
+
+   42 condition: value MEIGU value •
+
+    $default  reduce using rule 42 (condition)
+
+
+State 107
+
+   43 condition: value MAY value •
+
+    $default  reduce using rule 43 (condition)
+
+
+State 108
+
+   44 condition: value MAYGU value •
+
+    $default  reduce using rule 44 (condition)
+
+
+State 109
+
+   45 condition: value EQU value •
+
+    $default  reduce using rule 45 (condition)
+
+
+State 110
+
+   46 condition: value DIF value •
+
+    $default  reduce using rule 46 (condition)
+
+
+State 111
+
+   27 value: IDVR •
+   35 chi: CHI PIZ condition PDE IDVR • IGU value EOL FIN
+   36    | CHI PIZ condition PDE IDVR • IGU operation EOL FIN
+   37    | CHI PIZ condition PDE IDVR • IGU value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ condition PDE IDVR • IGU operation NOO IDVR IGU operation EOL FIN
+
+    IGU  shift, and go to state 130
+
+    $default  reduce using rule 27 (value)
+
+
+State 112
+
+   34 chi: CHI PIZ condition PDE operation • EOL FIN
+
+    EOL  shift, and go to state 131
+
+
+State 113
+
+   39 hasta: HAS PIZ value MEN value • PDE IDVR IGU operation EOL
+
+    PDE  shift, and go to state 132
+
+
+State 114
+
+   40 hasta: HAS PIZ value MEIGU value • PDE IDVR IGU operation EOL
+
+    PDE  shift, and go to state 133
+
+
+State 115
+
+   47 decfun: FUN IDVR PAR EOL FUE •
+
+    $default  reduce using rule 47 (decfun)
+
+
+State 116
+
+   27 value: IDVR •
+   53 return: RTN IDVR • EOL
+
+    EOL  shift, and go to state 134
+
+    $default  reduce using rule 27 (value)
+
+
+State 117
+
+   54 return: RTN operation • EOL
+
+    EOL  shift, and go to state 135
+
+
+State 118
+
+   49 decfun: FUN IDVR PAR decvar return • FUE
+
+    FUE  shift, and go to state 136
+
+
+State 119
+
+   50 decfun: FUN IDVR PAR initvar return • FUE
+
+    FUE  shift, and go to state 137
+
+
+State 120
+
+   51 decfun: FUN IDVR PAR asigvar return • FUE
+
+    FUE  shift, and go to state 138
+
+
+State 121
+
+   52 decfun: FUN IDVR PAR operation return • FUE
+
+    FUE  shift, and go to state 139
+
+
+State 122
+
+   48 decfun: FUN IDVR PAR return FUE •
+
+    $default  reduce using rule 48 (decfun)
+
+
+State 123
+
+   56 err: ITR EOL ATP printSentence FIN •
+
+    $default  reduce using rule 56 (err)
+
+
+State 124
+
+   55 err: ITR program ATP program FIN •
+
+    $default  reduce using rule 55 (err)
+
+
+State 125
+
+   61 printSentence: PRINT PIZ STR PDE EOL •
+
+    $default  reduce using rule 61 (printSentence)
+
+
+State 126
+
+   60 printSentence: PRINT PIZ value PDE EOL •
+
+    $default  reduce using rule 60 (printSentence)
+
+
+State 127
+
+   57 for: POR PIZ IDVR IGU INT • EOL value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR IGU INT • EOL value MAYGU value PDE IDVR IGU operation EOL
+
+    EOL  shift, and go to state 140
+
+
+State 128
+
+   59 for: POR PIZ initvar condition PDE • asigvar
+
+    IDVR  shift, and go to state 141
+
+    asigvar  go to state 142
+
+
+State 129
+
+   33 callfuncion: IDVR PIZ INT INT PDE EOL •
+
+    $default  reduce using rule 33 (callfuncion)
+
+
+State 130
+
+   35 chi: CHI PIZ condition PDE IDVR IGU • value EOL FIN
+   36    | CHI PIZ condition PDE IDVR IGU • operation EOL FIN
+   37    | CHI PIZ condition PDE IDVR IGU • value NOO IDVR IGU value EOL FIN
+   38    | CHI PIZ condition PDE IDVR IGU • operation NOO IDVR IGU operation EOL FIN
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 143
+    operation  go to state 144
+
+
+State 131
+
+   34 chi: CHI PIZ condition PDE operation EOL • FIN
+
+    FIN  shift, and go to state 145
+
+
+State 132
+
+   39 hasta: HAS PIZ value MEN value PDE • IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 146
+
+
+State 133
+
+   40 hasta: HAS PIZ value MEIGU value PDE • IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 147
+
+
+State 134
+
+   53 return: RTN IDVR EOL •
+
+    $default  reduce using rule 53 (return)
+
+
+State 135
+
+   54 return: RTN operation EOL •
+
+    $default  reduce using rule 54 (return)
+
+
+State 136
+
+   49 decfun: FUN IDVR PAR decvar return FUE •
+
+    $default  reduce using rule 49 (decfun)
+
+
+State 137
+
+   50 decfun: FUN IDVR PAR initvar return FUE •
+
+    $default  reduce using rule 50 (decfun)
+
+
+State 138
+
+   51 decfun: FUN IDVR PAR asigvar return FUE •
+
+    $default  reduce using rule 51 (decfun)
+
+
+State 139
+
+   52 decfun: FUN IDVR PAR operation return FUE •
+
+    $default  reduce using rule 52 (decfun)
+
+
+State 140
+
+   57 for: POR PIZ IDVR IGU INT EOL • value MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR IGU INT EOL • value MAYGU value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 148
+
+
+State 141
+
+   22 asigvar: IDVR • IGU value EOL
+   23        | IDVR • IGU operation EOL
+   24        | IDVR • IGU callfuncion
+
+    IGU  shift, and go to state 25
+
+
+State 142
+
+   59 for: POR PIZ initvar condition PDE asigvar •
+
+    $default  reduce using rule 59 (for)
+
+
+State 143
+
+   28 operation: value • MAS value
+   29          | value • RES value
+   30          | value • MUL value
+   31          | value • DIV value
+   35 chi: CHI PIZ condition PDE IDVR IGU value • EOL FIN
+   37    | CHI PIZ condition PDE IDVR IGU value • NOO IDVR IGU value EOL FIN
+
+    EOL  shift, and go to state 149
+    MAS  shift, and go to state 38
+    MUL  shift, and go to state 39
+    RES  shift, and go to state 40
+    DIV  shift, and go to state 41
+    NOO  shift, and go to state 150
+
+
+State 144
+
+   36 chi: CHI PIZ condition PDE IDVR IGU operation • EOL FIN
+   38    | CHI PIZ condition PDE IDVR IGU operation • NOO IDVR IGU operation EOL FIN
+
+    EOL  shift, and go to state 151
+    NOO  shift, and go to state 152
+
+
+State 145
+
+   34 chi: CHI PIZ condition PDE operation EOL FIN •
+
+    $default  reduce using rule 34 (chi)
+
+
+State 146
+
+   39 hasta: HAS PIZ value MEN value PDE IDVR • IGU operation EOL
+
+    IGU  shift, and go to state 153
+
+
+State 147
+
+   40 hasta: HAS PIZ value MEIGU value PDE IDVR • IGU operation EOL
+
+    IGU  shift, and go to state 154
+
+
+State 148
+
+   57 for: POR PIZ IDVR IGU INT EOL value • MEN value PDE IDVR IGU operation EOL
+   58    | POR PIZ IDVR IGU INT EOL value • MAYGU value PDE IDVR IGU operation EOL
+
+    MEN    shift, and go to state 155
+    MAYGU  shift, and go to state 156
+
+
+State 149
+
+   35 chi: CHI PIZ condition PDE IDVR IGU value EOL • FIN
+
+    FIN  shift, and go to state 157
+
+
+State 150
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO • IDVR IGU value EOL FIN
+
+    IDVR  shift, and go to state 158
+
+
+State 151
+
+   36 chi: CHI PIZ condition PDE IDVR IGU operation EOL • FIN
+
+    FIN  shift, and go to state 159
+
+
+State 152
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO • IDVR IGU operation EOL FIN
+
+    IDVR  shift, and go to state 160
+
+
+State 153
+
+   39 hasta: HAS PIZ value MEN value PDE IDVR IGU • operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 161
+
+
+State 154
+
+   40 hasta: HAS PIZ value MEIGU value PDE IDVR IGU • operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 162
+
+
+State 155
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN • value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 163
+
+
+State 156
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU • value PDE IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 164
+
+
+State 157
+
+   35 chi: CHI PIZ condition PDE IDVR IGU value EOL FIN •
+
+    $default  reduce using rule 35 (chi)
+
+
+State 158
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO IDVR • IGU value EOL FIN
+
+    IGU  shift, and go to state 165
+
+
+State 159
+
+   36 chi: CHI PIZ condition PDE IDVR IGU operation EOL FIN •
+
+    $default  reduce using rule 36 (chi)
+
+
+State 160
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO IDVR • IGU operation EOL FIN
+
+    IGU  shift, and go to state 166
+
+
+State 161
+
+   39 hasta: HAS PIZ value MEN value PDE IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 167
+
+
+State 162
+
+   40 hasta: HAS PIZ value MEIGU value PDE IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 168
+
+
+State 163
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value • PDE IDVR IGU operation EOL
+
+    PDE  shift, and go to state 169
+
+
+State 164
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value • PDE IDVR IGU operation EOL
+
+    PDE  shift, and go to state 170
+
+
+State 165
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO IDVR IGU • value EOL FIN
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value  go to state 171
+
+
+State 166
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO IDVR IGU • operation EOL FIN
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 172
+
+
+State 167
+
+   39 hasta: HAS PIZ value MEN value PDE IDVR IGU operation EOL •
+
+    $default  reduce using rule 39 (hasta)
+
+
+State 168
+
+   40 hasta: HAS PIZ value MEIGU value PDE IDVR IGU operation EOL •
+
+    $default  reduce using rule 40 (hasta)
+
+
+State 169
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE • IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 173
+
+
+State 170
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value PDE • IDVR IGU operation EOL
+
+    IDVR  shift, and go to state 174
+
+
+State 171
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO IDVR IGU value • EOL FIN
+
+    EOL  shift, and go to state 175
+
+
+State 172
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO IDVR IGU operation • EOL FIN
+
+    EOL  shift, and go to state 176
+
+
+State 173
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR • IGU operation EOL
+
+    IGU  shift, and go to state 177
+
+
+State 174
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR • IGU operation EOL
+
+    IGU  shift, and go to state 178
+
+
+State 175
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO IDVR IGU value EOL • FIN
+
+    FIN  shift, and go to state 179
+
+
+State 176
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO IDVR IGU operation EOL • FIN
+
+    FIN  shift, and go to state 180
+
+
+State 177
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU • operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 181
+
+
+State 178
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU • operation EOL
+
+    IDVR  shift, and go to state 51
+    INT   shift, and go to state 2
+    FLO   shift, and go to state 3
+
+    value      go to state 16
+    operation  go to state 182
+
+
+State 179
+
+   37 chi: CHI PIZ condition PDE IDVR IGU value NOO IDVR IGU value EOL FIN •
+
+    $default  reduce using rule 37 (chi)
+
+
+State 180
+
+   38 chi: CHI PIZ condition PDE IDVR IGU operation NOO IDVR IGU operation EOL FIN •
+
+    $default  reduce using rule 38 (chi)
+
+
+State 181
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 183
+
+
+State 182
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation • EOL
+
+    EOL  shift, and go to state 184
+
+
+State 183
+
+   57 for: POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EOL •
+
+    $default  reduce using rule 57 (for)
+
+
+State 184
+
+   58 for: POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL •
+
+    $default  reduce using rule 58 (for)
