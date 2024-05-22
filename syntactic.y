@@ -13,6 +13,7 @@ typedef struct {
     char *name;
     float value;
     char *valueS;
+    int isString;
 } Symbol;
 
 Symbol symbolTable[MAX_SYMBOLS];
@@ -68,7 +69,7 @@ void create(char *name) {
 
 float getSymbolValue(char *name) {
     for (int i = 0; i < symbolCount; ++i) {
-        if (strcmp(symbolTable[i].name, name) == 0) {          
+        if (strcmp(symbolTable[i].name, name) == 0) {         
             return symbolTable[i].value;
         }
     }
@@ -76,12 +77,21 @@ float getSymbolValue(char *name) {
     return 0.0;
 }
 
+char *getSymbolValueC(char *name) {
+    for (int i = 0; i < symbolCount; ++i) {
+        if (strcmp(symbolTable[i].name, name) == 0) {         
+            symbolTable[i].isString = 1;
+            return symbolTable[i].valueS;
+
+        }
+    }
+    /*printf("Variable no definida: %s\n", name);*/
+    return name;
+}
+
 void printSymbolTable() {
-    printf("Symbol Table:\n");
     printf("-------------\n");
     printf("%-20s %-20s %-20s\n", "Variable Name", "Numeric Value", "String Value");
-    printf("-------------\n");
-    
     for (int i = 0; i < symbolCount; ++i) {
         printf("%-20s %-20f %-20s\n", symbolTable[i].name, symbolTable[i].value, symbolTable[i].valueS);
     }
@@ -95,7 +105,7 @@ void printSymbolTable() {
     char *sval;
 }
 
-%token <sval> IDVR STR
+%token <sval> IDVR STR VSTR
 %token <ival> INT
 %token <fval> FLO
 %token EOL VAR IGU MAS MUL RES DIV MEN MEIGU MAY MAYGU EQU DIF CHI PIZ PDE FIN NOO HAS FUN PAR RTN ITR FUE ATP ARG PRINT POR
@@ -126,13 +136,14 @@ sentence    : decvar
             | printSentence
 
 decvar      : VAR IDVR EOL {  create($2); }
+            | VAR VSTR EOL { create($2);}
 
-initvar     : VAR IDVR IGU INT EOL { setSymbolValue($2, (float)$4); 
+initvar     : VAR VSTR IGU STR EOL { setSymbolValueC($2, $4);}
+            | VAR IDVR IGU INT EOL { setSymbolValue($2, (float)$4); 
                                     $$ = $4;}
             | VAR IDVR IGU FLO EOL { setSymbolValue($2, $4); 
                                     $$ = $4;}
             | VAR IDVR IGU operation EOL { setSymbolValue($2, (float)$4); }
-            | VAR IDVR IGU STR EOL { setSymbolValueC($2, $4);}
             | VAR IDVR IGU value EOL { setSymbolValue($2, $4);}
 
 asigvar     : IDVR IGU value EOL { setSymbolValue($1, $3); }
@@ -142,6 +153,7 @@ asigvar     : IDVR IGU value EOL { setSymbolValue($1, $3); }
 value       : INT { $$ = (float)$1; }
             | FLO { $$ = $1; }
             | IDVR { $$ = getSymbolValue($1);}
+      
 
 operation   : value MAS value { $$ = $1 + $3; }
             | value RES value { $$ = $1 - $3; }
@@ -236,7 +248,7 @@ for         : POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EO
                                                                                     setSymbolValue($11, i);
                                                                                 }
                                                                               }
-            | POR PIZ IDVR IGU INT EOL value MAYGU value PDE IDVR IGU operation EOL {int i;
+            | POR PIZ IDVR IGU INT EOL value MEIGU value PDE IDVR IGU operation EOL {int i;
                                                                                 setSymbolValue($3, (float)$5); 
                                                                                 for(i = $5; i <= $9; i++){
                                                                                     setSymbolValue($11, i);
@@ -248,9 +260,10 @@ for         : POR PIZ IDVR IGU INT EOL value MEN value PDE IDVR IGU operation EO
                                                      }
                                                     }
 
-printSentence : PRINT PIZ value PDE EOL { printf("value: %f\n", $3); }
-              | PRINT PIZ STR PDE EOL { printf("string: %s\n", $3);  }
-         /* printSymbolTable(); */     
+printSentence:  PRINT PIZ STR PDE EOL { printf(" %s\n", getSymbolValueC($3)); }
+                | PRINT PIZ VSTR PDE EOL { printf(" %s\n", getSymbolValueC($3)); }
+                | PRINT PIZ value PDE EOL { printf(" %f\n", $3); }
+   
 %%
 /**Seccion de codigo de usuario**/
 void yyerror(char *s){

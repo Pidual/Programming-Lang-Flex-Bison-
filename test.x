@@ -1,15 +1,15 @@
 print("-------PRUEBA DECLARACION variable------")#
-variable gato#
-print(gato)#
+variable string>gato#
+print(string>gato)#
 
-variable gato3 = "gaticoo"#
-print(gato3)#
+variable string>gato3 = "gaticoo"#
+print("gato3")#
 
 variable num1 = 1#
 print(num1)#
 
-variable v12 = "Hola"#
-print(v12)#
+variable string>hola = "Hola"#
+print(string>hola)#
 
 variable v2 = -2#
 print (v2)#
@@ -59,27 +59,21 @@ print ("-------PRUEBA POR------")#
 variable pruebafor1 = 0#
 variable i1#
 por(i1 = 0# i1 < 40) pruebafor1 = pruebafor1 + 1#
-print (pruebafor1)#
+print(pruebafor1)#
 
 variable pruebafor2 = 0#
 variable i2#
 por(i2 = 0# i2 <= 40) pruebafor2 = pruebafor2 + 1#
-print (pruebafor2)#
+print(pruebafor2)#
 
 print ("-------PRUEBA FUNCIONES------")#
 
 funcion suma1() variable a3 = 4 + 1# retorno a3#finFun
-print (a3)#
-
-funcion fun2(variable v1 variable v2)#finFun
-print (fun2)#
+print(a3)#
 
 funcion fun0() variable z1 = a3 + 1# retorno z1# finFun
 print (z1)#
 
-funcion fun7(variable v1 variable v2)#finFun
-fun7(9 2)#
-print (fun7)#
 
 print ("-------PRUEBA ERRORES------")#
 

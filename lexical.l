@@ -9,11 +9,13 @@ int -?[0-9]+
 string \"[^(\n|\")]*\"
 param \(("var v"[0-9]+" "?)*\)
 identiVar [a-z][a-zA-Z0-9]*
+stringVar (string>[a-zA-Z0-9]*)
 argumento \[("[0-9]+"?)*\]
 /** Seccion de reglas**/
 %%
 "variable"                      {return VAR;}
 "funcion"                       {return FUN;}
+{stringVar}                     {yylval.sval = strdup(yytext); return VSTR;}
 {string}                        {yylval.sval = strdup(yytext); return STR;}
 {float}                         {yylval.fval = atof(yytext); return FLO;}
 {int}                           {yylval.ival = atoi(yytext); return INT;}
